@@ -96,28 +96,36 @@ def setup():
 def draw():
     # Background
     background(BACKGROUND_COLOUR[0], BACKGROUND_COLOUR[1], BACKGROUND_COLOUR[2])
+    
+    boxx = makes_box(dots, lines)
+    
+    # print(lines)
 
-    """
-    boxx = makes(box_lines)
-
-    try:
-        if boxx:
-            print("How did u get here?")
-        else:
-            if turn == "p1":
+    if boxx == False:
+        print("How did u get here?")
+    else:
+        if turn == "p1":
+            if boxx not in player_1_boxes:
                 player_1_boxes.append(boxx)
-            elif turn == "p2":
-                player_2_boxws.append(boxx)
-    """
+        elif turn == "p2":
+            if boxx not in player_2_boxes:
+                player_2_boxes.append(boxx)
+
+    print("p1", player_1_boxes)
+    
+    print("p2", player_2_boxes)
 
     # Drawing the Rectangles
+    
+    noStroke()
+    
     fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
     for dabba in player_1_boxes:
         rect(dabba[0], dabba[1], (LINE_DIS_1), (LINE_DIS_2))
 
     fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
     for dabba in player_2_boxes:
-        rect(dabba[0], dabba[1], (LINE_DIS_2), (LINE_DIS_1))
+        rect(dabba[0], dabba[1], (LINE_DIS_1), (LINE_DIS_2))
 
     # Setting attributes of dots
     fill(DOT_COLOUR[0], DOT_COLOUR[1], DOT_COLOUR[2])
@@ -180,18 +188,10 @@ def draw():
         text("Please put a proper line", 10, height)
 
 
-def makes_box(lines):
-
-    temp_lin = lines[-1]
-
-    leng = sqrt(((lines[i][0][0] - lines[i][1][0]) ** 2) +
-                ((lines[i][0][1] - lines[i][1][1]) ** 2))
-
-    # CREATE LOGIC TO
-    # DETERMINE IF IT
-    # MAKES A BOX!!!!
-    # !!!!
-
+def makes_box(dotz, linez):
+    
+    box_cor = dotz[0]
+        
     return box_cor
 
 
