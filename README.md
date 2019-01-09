@@ -3,6 +3,21 @@ This repository contains all the stuff for my CPT for ICS3U1
 
 Please add any nessicary files to the repository.
 
+UPDATES:
+
+Added square logic! HORAAAAAYYY!!!
+
+Time from now on will be used to make the game look pretty;
+will focus more on the asthetics since the functionality of the game is solid.
+
+
+
+
+
+
+
+ETC:
+
 REMEMBER:
 
 ORGANIZATION! 
