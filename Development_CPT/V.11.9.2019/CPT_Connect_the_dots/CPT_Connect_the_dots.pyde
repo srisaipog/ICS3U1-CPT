@@ -60,7 +60,9 @@ def setup():
     global LINE_DIS_1, LINE_DIS_2
 
     # Setting background colour
-    background(BACKGROUND_COLOUR[0], BACKGROUND_COLOUR[1], BACKGROUND_COLOUR[2])
+    background(BACKGROUND_COLOUR[0],
+               BACKGROUND_COLOUR[1],
+               BACKGROUND_COLOUR[2])
 
     # Setting size of screen
     size(480, 640)
@@ -94,52 +96,51 @@ def setup():
 def draw():
     global turn
     # Background
-    background(BACKGROUND_COLOUR[0], BACKGROUND_COLOUR[1], BACKGROUND_COLOUR[2])
-    
+    background(BACKGROUND_COLOUR[0],
+               BACKGROUND_COLOUR[1],
+               BACKGROUND_COLOUR[2])
+
     boxes = makes_box(dots, lines)
-    
+
     # print(lines)
-    
+
     if boxes:
         for boxx in boxes:
             if turn == "p2":
-                if (boxx not in player_1_boxes and
-                    boxx not in player_2_boxes):
+                if (boxx not in player_1_boxes and boxx not in player_2_boxes):
                     player_1_boxes.append(boxx)
                     turn = "p1"
             elif turn == "p1":
-                if (boxx not in player_2_boxes and
-                    boxx not in player_1_boxes):
+                if (boxx not in player_2_boxes and boxx not in player_1_boxes):
                     player_2_boxes.append(boxx)
                     turn = "p2"
 
     # print("p1", player_1_boxes)
-    
     # print("p2", player_2_boxes)
 
     # Drawing the Rectangles
-    
+
     noStroke()
-    
+
     fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
     for dabba in player_1_boxes:
-        rect(dabba[0] + (LINE_DIS_1/6.4), dabba[1] + (LINE_DIS_1/6.4), (LINE_DIS_1) - (LINE_DIS_1/3.2), (LINE_DIS_2) - (LINE_DIS_2/2.4))
+        rect(dabba[0] + (LINE_DIS_1/6.4), dabba[1] + (LINE_DIS_1/6.4),
+             (LINE_DIS_1) - (LINE_DIS_1/3.2), (LINE_DIS_2) - (LINE_DIS_2/2.4))
 
     fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
     for dabba in player_2_boxes:
-        rect(dabba[0] + (LINE_DIS_1/6.4), dabba[1] + (LINE_DIS_1/6.4), (LINE_DIS_1) - (LINE_DIS_1/3.2), (LINE_DIS_2) - (LINE_DIS_2/2.4))
+        rect(dabba[0] + (LINE_DIS_1/6.4), dabba[1] + (LINE_DIS_1/6.4),
+             (LINE_DIS_1) - (LINE_DIS_1/3.2), (LINE_DIS_2) - (LINE_DIS_2/2.4))
 
-    
-    
     fill(255, 0, 0)
     textSize(15)
     text("Points:", 10, 30)
-    
+
     textSize(20)
-    
+
     fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
     text("P2: " + str((len(player_2_boxes))), 75, 50)
-    
+
     fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
     text("P1: " + str((len(player_1_boxes))), 75, 25)
 
@@ -202,66 +203,40 @@ def draw():
     # Telling the player if they are a noob
     if bad_line:
         textSize(30)
-        text((turn.upper() + ", " + "Please put a proper line"), 50, height - 50)
+        text((turn.upper() + ", Please put a proper line"), 50, height - 50)
 
 
 def makes_box(dots, lines):
-    
+
     box_cors = []
-    
-    """
-    lin 1
-    lin 2
-    lin 3
-    lin 4
-    
-    dot = top left of square
-    
-    square abcd
-    
-    a = (dotx, doty)
-    b = (dotx, doty - vert len)
-    c = (dotx + hor len, doty - ver len)
-    d = (dotx + hor len, dot y)
-    
-    
-    if
-    lin 1 = a, b
-    lin 2 = b, c
-    lin 3 = c, d
-    lin 4 = d, a
-    """ 
-    
-    
+
     for dott in dots:
         a = [dott[0], dott[1]]
         b = [dott[0], dott[1] + LINE_DIS_2]
         c = [dott[0] + LINE_DIS_1, dott[1] + LINE_DIS_2]
         d = [dott[0] + LINE_DIS_1, dott[1]]
-        
+
         lin_1 = [a, b]
         lin_2 = [b, c]
         lin_3 = [c, d]
         lin_4 = [d, a]
-        
+
         lines_1_to_4 = [lin_1, lin_2, lin_3, lin_4]
-        
+
         lines_out_of_4 = 0
         for lin_1_4 in lines_1_to_4:
             for lin in lines:
-                if (lin[0] in lin_1_4 and
-                    lin[1] in lin_1_4):
+                if (lin[0] in lin_1_4 and lin[1] in lin_1_4):
                     lines_out_of_4 += 1
-                    print(lines_out_of_4)
-        
+                    # (lines_out_of_4)
+
                 if lines_out_of_4 == 4:
                     box_cors.append(a)
                     # print(box_cors)
-            
+
     if len(box_cors) >= 1:
         # print(box_cors)
         return box_cors
-        
 
 
 def keyPressed():
@@ -361,5 +336,4 @@ def keyPressed():
             selection = False
 
             # print(str(equivalent))
-
             # print(lines)
