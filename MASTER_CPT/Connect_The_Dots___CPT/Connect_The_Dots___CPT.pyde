@@ -92,6 +92,7 @@ def setup():
 
 
 def draw():
+    global turn
     # Background
     background(BACKGROUND_COLOUR[0], BACKGROUND_COLOUR[1], BACKGROUND_COLOUR[2])
     
@@ -105,10 +106,12 @@ def draw():
                 if (boxx not in player_1_boxes and
                     boxx not in player_2_boxes):
                     player_1_boxes.append(boxx)
+                    turn = "p1"
             elif turn == "p1":
                 if (boxx not in player_2_boxes and
                     boxx not in player_1_boxes):
                     player_2_boxes.append(boxx)
+                    turn = "p2"
 
     # print("p1", player_1_boxes)
     
