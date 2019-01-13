@@ -20,6 +20,10 @@ player_2_boxes = []
 
 # etc resettable
 
+colour_choice = 0
+select_prev = 0
+choice = "P1"
+
 selection = False
 bad_line = False
 turn = "p1"
@@ -62,14 +66,14 @@ CURSOR_COLOUR_P1 = (255, 0, 0)
 CURSOR_COLOUR_P2 = (255, 100, 0)
 
 # Line Colours
-PLAYER_1_COLOUR = (255, 255, 0)
-PLAYER_2_COLOUR = (255, 51, 153)
+PLAYER_1_COLOUR = (220, 20, 60)
+PLAYER_2_COLOUR = (255, 140, 0)
 
 # ET CETERA
 LINE_DIS_1 = 0
 LINE_DIS_2 = 0
 
-OPTIONS = [[1, "Play"], [2, "Instructions"], [3, "Info"]]
+OPTIONS = [[1, "Play"], [2, "Instructions"], [3, "Info"], [4, "Options"]]
 
 state = "menu"
 
@@ -118,16 +122,19 @@ def setup():
 
 def draw():
 
-    global state, win
+    global state, win, PLAYER_1_COLOUR, PLAYER_2_COLOUR
+    global colour_choice, selection, choice
     if state == "menu":
         # print(select)
 
         background(150)
         fill(255)
+        noStroke()
 
         rect(50, (height/5) * 1, width/5, width/20)
         rect(50, (height/5) * 2, width/5, width/20)
         rect(50, (height/5) * 3, width/5, width/20)
+        rect(50, (height/5) * 4, width/5, width/20)
 
         fill(255, 0, 0)
         try:
@@ -139,6 +146,12 @@ def draw():
             text(OPTIONS[0][1], 55, ((height/5) * 1) + 15)
             text(OPTIONS[1][1], 55, ((height/5) * 2) + 15)
             text(OPTIONS[2][1], 55, ((height/5) * 3) + 15)
+            text(OPTIONS[3][1], 55, ((height/5) * 4) + 15)
+
+            textSize(15)
+            fill(0)
+            text("Use the arrow keys and enter/space to navigate",
+                 50, height - 50)
 
         except:
             textSize(15)
@@ -150,7 +163,75 @@ def draw():
                 text(instructions(), 25, 150)
             elif select == "Info":
                 text(info(), 50, 150)
+            elif select == "Options":
 
+                stroke(20)
+
+                colour_1 = (220, 20, 60)  # red
+                colour_2 = (255, 140, 0)  # orange
+                colour_3 = (255, 215, 0)  # yellow
+                colour_4 = (50, 205, 50)  # green
+                colour_5 = (30, 144, 255)  # blue
+                colour_6 = (138, 43, 226)  # violet
+
+                colours = [colour_1, colour_2, colour_3, colour_4,
+                           colour_5, colour_6]
+
+                p1_choice = PLAYER_1_COLOUR
+                p2_choice = PLAYER_2_COLOUR
+
+                for i, cul in enumerate(colours):
+                    noStroke()
+                    fill(cul[0], cul[1], cul[2])
+                    rect(50 * (i + 1), 150, 50, 50)
+                    textSize(20)
+                    fill(255)
+                    text(str(i + 1), (50 * i) + 20 + 50, 140)
+
+                if choice == "P1":
+                    textSize(20)
+                else:
+                    textSize(15)
+                text("Player 1: ", 100, 300, 50)
+
+                if choice == "P2":
+                    textSize(20)
+                else:
+                    textSize(15)
+                text("Player 2: ", 100, 350, 50)
+
+                if colour_choice >= 1:
+                    if choice == "P1":
+                        p1_choice = colours[colour_choice - 1]
+                        choice = "P2"
+
+                    elif choice == "P2":
+                        p2_choice = colours[colour_choice - 1]
+                        choice = "P1"
+
+                    colour_choice = 0
+
+                PLAYER_1_COLOUR = p1_choice
+                PLAYER_2_COLOUR = p2_choice
+
+                fill(PLAYER_1_COLOUR[0],
+                     PLAYER_1_COLOUR[1],
+                     PLAYER_1_COLOUR[2])
+                rect(200, 265, 50, 50)
+
+                fill(PLAYER_2_COLOUR[0],
+                     PLAYER_2_COLOUR[1],
+                     PLAYER_2_COLOUR[2])
+                rect(200, 315, 50, 50)
+
+                # print(selection)
+                # print(choice)
+
+            fill(150)
+            rect(0, height - 75, width, 75)
+
+            textSize(15)
+            fill(0)
             text("Press any arrow to return to menu", 100, height - 50)
 
         fill(0)
@@ -389,7 +470,7 @@ def makes_box(dots, lines):
 
 
 def keyPressed():
-    global state
+    global state, select, colour_choice, select_prev
     # print(keyCode)
 
     if state == "game":
@@ -497,26 +578,44 @@ def keyPressed():
             state = "menu"
 
     elif state == "menu":
-        global select
-
-        for op in OPTIONS:
-            if select in op:
-                select = op[0]
-
-        if keyCode == KEY_UP or keyCode == KEY_LEFT:
-            select -= 1
-        elif keyCode == KEY_DOWN or keyCode == KEY_RIGHT:
-            select += 1
-
-        if select >= 4:
-            select = 1
-        elif select < 1:
-            select = 3
-
-        elif keyCode == KEY_SPACE or keyCode == KEY_ENTER:
-            select = OPTIONS[select-1][1]
 
         # print(select)
+
+        if (keyCode == KEY_UP or keyCode == KEY_DOWN or
+           keyCode == KEY_LEFT or keyCode == KEY_RIGHT):
+
+            if isinstance(select, str):
+                select = select_prev
+
+            if keyCode == KEY_UP or keyCode == KEY_LEFT:
+                select -= 1
+            elif keyCode == KEY_DOWN or keyCode == KEY_RIGHT:
+                select += 1
+
+            if select >= 5:
+                select = 1
+            elif select < 1:
+                select = 4
+
+            for op in OPTIONS:
+                if select in op:
+                    select = op[0]
+
+        elif keyCode == KEY_SPACE or keyCode == KEY_ENTER:
+            try:
+                select = OPTIONS[select-1][1]
+            except:
+                select = select
+
+        # print(select)
+
+        if keyCode in range(49, 55):
+            colour_choice = keyCode - 48
+        else:
+            colour_choice = 0
+
+        if isinstance(select, int):
+            select_prev = select
 
 
 def menu(key_given):
@@ -534,7 +633,6 @@ def menu(key_given):
             reset()
         elif prompt and key_given == KEY_N:
             prompt = False
-            print('falsife')
 
     # print("did it", prompt)
 
@@ -550,6 +648,8 @@ def instructions():
     When selecting a line,
     a thin green line means that the line is of a good length
     and a thin red line means that the line is too long
+    While in the game:
+        M = Menu
     """
     return inst
 
@@ -565,10 +665,16 @@ def reset():
     global position, pos_index, dots, p1_lines, p2_lines
     global temp_line, player_1_boxes, player_2_boxes, lines
     global selection, bad_line, turn, select, prompt, win
+    global colour_choice, select_prev, choice
 
     fill(0)
     stroke(0)
     strokeWeight(1)
+
+    colour_choice = 0
+    select_prev = 0
+
+    choice = "P1"
 
     position = []
     pos_index = 0
