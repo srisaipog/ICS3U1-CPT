@@ -5,6 +5,8 @@ Please add any nessicary files to the repository.
 
 UPDATES:
 
+Added a menu! Now we don't have to restart after the game is over
+
 Added square logic! HORAAAAAYYY!!!
 
 Time from now on will be used to make the game look pretty;
