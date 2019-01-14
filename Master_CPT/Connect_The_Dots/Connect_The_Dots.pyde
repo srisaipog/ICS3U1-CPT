@@ -147,18 +147,19 @@ def draw():
         strokeWeight(3)
 
         for i in range(1, 5):
-            rect(width/2 - 100, (height/5) * i, (width/5)*2, (width/20)*2)
+            rect(width/2 - 100, 75 + (height/7) * i, (width/5)*2, (width/20)*2)
 
         fill(240, 230, 140)
         try:
-            rect(width/2 - 100, (height/5) * select, (width/5)*2, (width/20)*2)
+            rect(width/2 - 100, 75 + (height/7) * select,
+                 (width/5)*2, (width/20)*2)
 
             textSize(20)
 
             fill(0)
 
             for j in range(1, 5):
-                text(OPTIONS[j-1][1], width/2 - 92, ((height/5) * j) + 25)
+                text(OPTIONS[j-1][1], width/2 - 92, 100 + (height/7) * j)
 
             textSize(20)
             fill(0)
