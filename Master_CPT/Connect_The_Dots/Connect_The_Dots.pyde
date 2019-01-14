@@ -18,7 +18,15 @@ temp_line = []
 player_1_boxes = []
 player_2_boxes = []
 
+select_cul = 0
+
+colour_choice_1 = 1
+
+colour_choice_2 = 2
+
 # etc resettable
+
+player_cul_choice = 0
 
 colour_choice = 0
 select_prev = 0
@@ -31,6 +39,7 @@ turn = "p1"
 win = 0
 
 prompt = False
+menu_prompt = False
 
 select = 1
 
@@ -48,6 +57,7 @@ KEY_SPACE = 32
 KEY_M = 77
 KEY_Y = 89
 KEY_N = 78
+KEY_R = 82
 
 # Length and Width of Dots
 GRID_LEN = 8
@@ -117,41 +127,44 @@ def setup():
     # player_1_boxes.append(dots[5])
     # print(dots)
 
-    # print((LINE_DIS_2), (LINE_DIS_1))
+    # (LINE_DIS_2), (LINE_DIS_1))
 
 
 def draw():
 
-    global state, win, PLAYER_1_COLOUR, PLAYER_2_COLOUR
-    global colour_choice, selection, choice
+    global state, win, PLAYER_1_COLOUR, PLAYER_2_COLOUR, select, select_cul
+    global colour_choice, selection, choice, prompt, menu_prompt
+    global colour_choice_1, colour_choice_2, player_cul_choice
+
+    # print(select)
+
     if state == "menu":
-        # print(select)
+        # print(colour_choice, colour_choice_1, colour_choice_2)
 
-        background(150)
+        background(200)
         fill(255)
-        noStroke()
+        stroke(0)
+        strokeWeight(3)
 
-        rect(50, (height/5) * 1, width/5, width/20)
-        rect(50, (height/5) * 2, width/5, width/20)
-        rect(50, (height/5) * 3, width/5, width/20)
-        rect(50, (height/5) * 4, width/5, width/20)
+        for i in range(1, 5):
+            rect(width/2 - 100, (height/5) * i, (width/5)*2, (width/20)*2)
 
-        fill(255, 0, 0)
+        fill(240, 230, 140)
         try:
-            rect(50, (height/5) * select, width/5, width/20)
+            rect(width/2 - 100, (height/5) * select, (width/5)*2, (width/20)*2)
 
-            textSize(10)
+            textSize(20)
+
             fill(0)
 
-            text(OPTIONS[0][1], 55, ((height/5) * 1) + 15)
-            text(OPTIONS[1][1], 55, ((height/5) * 2) + 15)
-            text(OPTIONS[2][1], 55, ((height/5) * 3) + 15)
-            text(OPTIONS[3][1], 55, ((height/5) * 4) + 15)
+            for j in range(1, 5):
+                text(OPTIONS[j-1][1], width/2 - 92, ((height/5) * j) + 25)
 
-            textSize(15)
+            textSize(20)
             fill(0)
-            text("Use the arrow keys and enter/space to navigate",
-                 50, height - 50)
+            text(("""     Use the ARROW KEYS to navigate and
+            ENTER/SPACE KEYS to select"""),
+                 width/2 - 200, height - 50)
 
         except:
             textSize(15)
@@ -160,7 +173,7 @@ def draw():
             if select == "Play":
                 state = "game"
             elif select == "Instructions":
-                text(instructions(), 25, 150)
+                text(instructions(), 5, 150)
             elif select == "Info":
                 text(info(), 50, 150)
             elif select == "Options":
@@ -183,33 +196,48 @@ def draw():
                 for i, cul in enumerate(colours):
                     noStroke()
                     fill(cul[0], cul[1], cul[2])
+
                     rect(50 * (i + 1), 150, 50, 50)
+
                     textSize(20)
                     fill(255)
                     text(str(i + 1), (50 * i) + 20 + 50, 140)
 
+                if player_cul_choice == 1:
+                    choice = "P1"
+                elif player_cul_choice == 2:
+                    choice = "P2"
+
+                # print(p1_choice, p2_choice)
+
                 if choice == "P1":
-                    textSize(20)
+                    p1_choice = colours[colour_choice_1 - 1]
+                elif choice == "P2":
+                    p2_choice = colours[colour_choice_2 - 1]
+
+                fill(255, 0)
+                stroke(0)
+                strokeWeight(5)
+                rect(50 * (select_cul), 150, 50, 50)
+                noStroke()
+                fill(255)
+
+                if choice == "P1":
+                    textSize(25)
                 else:
                     textSize(15)
-                text("Player 1: ", 100, 300, 50)
+                text("Player 1: ", 80, 300)
 
                 if choice == "P2":
-                    textSize(20)
+                    textSize(25)
                 else:
                     textSize(15)
-                text("Player 2: ", 100, 350, 50)
+                text("Player 2: ", 80, 350)
 
-                if colour_choice >= 1:
-                    if choice == "P1":
-                        p1_choice = colours[colour_choice - 1]
-                        choice = "P2"
-
-                    elif choice == "P2":
-                        p2_choice = colours[colour_choice - 1]
-                        choice = "P1"
-
-                    colour_choice = 0
+                textSize(20)
+                fill(0)
+                text("""                 Use '1' and '2' to select colours for
+                Player 1 and Player 2 respectively""", -30, height - 150)
 
                 PLAYER_1_COLOUR = p1_choice
                 PLAYER_2_COLOUR = p2_choice
@@ -217,30 +245,29 @@ def draw():
                 fill(PLAYER_1_COLOUR[0],
                      PLAYER_1_COLOUR[1],
                      PLAYER_1_COLOUR[2])
+
                 rect(200, 265, 50, 50)
 
                 fill(PLAYER_2_COLOUR[0],
                      PLAYER_2_COLOUR[1],
                      PLAYER_2_COLOUR[2])
+
                 rect(200, 315, 50, 50)
 
                 # print(selection)
                 # print(choice)
 
-            fill(150)
-            rect(0, height - 75, width, 75)
-
-            textSize(15)
+            textSize(20)
             fill(0)
-            text("Press any arrow to return to menu", 100, height - 50)
+            text("Press M to return to menu", 100, height - 50)
 
         fill(0)
 
-        textSize(25)
-        text("Connect The Dots", 50, 50)
+        textSize(30)
+        text("Connect The Dots", width/2 - 135, 40)
 
-        textSize(15)
-        text("Menu", 50, 75)
+        textSize(25)
+        text("Menu", width/2 - 45, 100)
 
     elif state == "game":
 
@@ -296,7 +323,7 @@ def draw():
                  (LINE_DIS_1) - (LINE_DIS_1/3.2),
                  (LINE_DIS_2) - (LINE_DIS_2/2.4))
 
-        fill(255, 0, 0)
+        fill(178, 34, 34)
         textSize(15)
         text("Points:", 10, 30)
 
@@ -363,7 +390,7 @@ def draw():
             line(write[0][0], write[0][1], write[1][0], write[1][1])
 
         # Writing Who's Turn It Is
-        fill(255, 0, 0)
+        fill(178, 34, 34)
         if turn == "p1":
             textSize((width + height)//25)
             text("Player 1", width/2 - width/9, height/15)
@@ -378,7 +405,7 @@ def draw():
                  50, height - 50)
 
         if end_game(GRID_WID, GRID_LEN, player_1_boxes, player_2_boxes):
-            background(0)
+            background(238, 232, 170)
             p1_score = len(player_1_boxes)
             p2_score = len(player_2_boxes)
 
@@ -389,19 +416,26 @@ def draw():
             else:
                 win = "Draw"
 
-            textSize(30)
+            fill(0)
+
+            textSize(40)
 
             if win != "Draw":
-                text((str(win) + " has won!"), 100, 50)
+                text((str(win) + " has won!"), 80, 50)
             else:
                 text("It's a draw!", 100, 50)
 
-            text(("P1: " + str(p1_score)), 100, 100)
-            text(("P2: " + str(p2_score)), 250, 100)
+            textSize(30)
+
+            text("Score", 175, 150)
+
+            textSize(25)
+            text(("P1: " + str(p1_score)), 100, 200)
+            text(("P2: " + str(p2_score)), 250, 200)
 
             textSize(20)
 
-            text("Press any key to return to menu", 50, 200)
+            text("Press any key to return to menu", 60, height - 50)
 
         if prompt:
             fill(255)
@@ -412,8 +446,21 @@ def draw():
             fill(0)
             textSize(15)
             text("""                 Are you sure you want
-                 to return to the menu?
-                 All progress will
+                 to return to restart?
+                 Your game will
+                 be lost""", 40, 130)
+            text("Y = YES   N = NO", 120, 250)
+        elif menu_prompt:
+            fill(255)
+            stroke(0)
+            strokeWeight(1)
+
+            rect(100, 100, 200, 200)
+            fill(0)
+            textSize(15)
+            text("""                 Are you sure you want
+                 to return to menu?
+                 Your game will NOT
                  be lost""", 40, 130)
             text("Y = YES   N = NO", 120, 250)
 
@@ -471,6 +518,7 @@ def makes_box(dots, lines):
 
 def keyPressed():
     global state, select, colour_choice, select_prev
+    global menu_prompt, prompt, colour_choice_1, colour_choice_2
     # print(keyCode)
 
     if state == "game":
@@ -570,7 +618,8 @@ def keyPressed():
 
                 # print(str(equivalent))
                 # print(lines)
-        elif (keyCode == KEY_M) or (keyCode == KEY_N) or (keyCode == KEY_Y):
+        elif ((keyCode == KEY_R) or (keyCode == KEY_N) or
+              (keyCode == KEY_Y) or (keyCode == KEY_M)):
             menu(keyCode)
 
         if isinstance(win, str):
@@ -578,61 +627,91 @@ def keyPressed():
             state = "menu"
 
     elif state == "menu":
+        global player_cul_choice, select_cul, colour_choice
 
         # print(select)
 
-        if (keyCode == KEY_UP or keyCode == KEY_DOWN or
-           keyCode == KEY_LEFT or keyCode == KEY_RIGHT):
-
+        if keyCode == KEY_M:
             if isinstance(select, str):
                 select = select_prev
-
-            if keyCode == KEY_UP or keyCode == KEY_LEFT:
-                select -= 1
-            elif keyCode == KEY_DOWN or keyCode == KEY_RIGHT:
-                select += 1
-
-            if select >= 5:
-                select = 1
-            elif select < 1:
-                select = 4
 
             for op in OPTIONS:
                 if select in op:
                     select = op[0]
 
-        elif keyCode == KEY_SPACE or keyCode == KEY_ENTER:
+        if (keyCode == KEY_UP or keyCode == KEY_DOWN or
+           keyCode == KEY_LEFT or keyCode == KEY_RIGHT):
+
+            try:
+                if keyCode == KEY_UP or keyCode == KEY_LEFT:
+                    select -= 1
+                elif keyCode == KEY_DOWN or keyCode == KEY_RIGHT:
+                    select += 1
+            except:
+                select = select
+
+            if isinstance(select, int):
+                if select >= 5:
+                    select = 1
+                elif select < 1:
+                    select = 4
+
+        elif (keyCode == KEY_SPACE or keyCode == KEY_ENTER and
+              select != "Options"):
             try:
                 select = OPTIONS[select-1][1]
             except:
                 select = select
 
-        # print(select)
+        if keyCode == 49:
+            player_cul_choice = 1
+        elif keyCode == 50:
+            player_cul_choice = 2
 
-        if keyCode in range(49, 55):
-            colour_choice = keyCode - 48
-        else:
-            colour_choice = 0
+        if keyCode == KEY_UP or keyCode == KEY_RIGHT and select == "Options":
+            select_cul += 1
+        if keyCode == KEY_DOWN or keyCode == KEY_LEFT and select == "Options":
+            select_cul -= 1
+
+        if (keyCode == KEY_ENTER or keyCode == KEY_SPACE and
+           select == "Options"):
+            if choice == "P1":
+                colour_choice_1 = select_cul
+            elif choice == "P2":
+                colour_choice_2 = select_cul
+
+        if select_cul < 1:
+            select_cul = 6
+        elif select_cul > 6:
+            select_cul = 1
 
         if isinstance(select, int):
             select_prev = select
 
 
 def menu(key_given):
-    global state
-    global prompt
+    global state, select
+    global prompt, menu_prompt
 
     # print(prompt)
 
-    if key_given == KEY_M:
+    if key_given == KEY_R:
         prompt = True
+    elif key_given == KEY_M:
+        menu_prompt = True
 
     if prompt:
         if prompt and key_given == KEY_Y:
-            state = "menu"
             reset()
         elif prompt and key_given == KEY_N:
             prompt = False
+    elif menu_prompt:
+        if menu_prompt and key_given == KEY_Y:
+            select = 1
+            state = "menu"
+            menu_prompt = False
+        elif menu_prompt and key_given == KEY_N:
+            menu_prompt = False
 
     # print("did it", prompt)
 
@@ -640,41 +719,64 @@ def menu(key_given):
 
 
 def instructions():
-    inst = """How to play this game:
-    The objective of this game is to create lines to form boxes
-    the person with the most boxes at the end wins.
-    Use the arrow keys to move the cursor
-    and enter/space to select
-    When selecting a line,
-    a thin green line means that the line is of a good length
-    and a thin red line means that the line is too long
-    While in the game:
-        M = Menu
+    inst = """
+    How to play this game:
+    - The objective of this game is to create lines to form boxes
+    - The person with the most boxes at the end wins.
+
+    CONTROLS
+    - Use the arrow keys to move the cursor
+    - Use enter/space to select a dot
+          - When selecting a line, a thin line will be created.
+          - If the line is green: the line is of a proper length
+          - If the line is red: the line is too long
+          - Lines must be 1 unit long
+    - M to return to the menu
+    - R to restart the game
+    - Y to respond YES to prompts
+    - N to respond NO to prompts
     """
     return inst
 
 
 def info():
-    information = """ This game was created by Sridhar Sairam
-    for his ICS3U1 CPT."""
+    information = """
+    This game was created by:
+    Sridhar Sairam for his ICS3U1 CPT.
+
+    The final version of this game was made on:
+        15 January 2019
+
+    This game was made using Processing for Python.
+
+    For further details, please contact Sridhar Sairam.
+    """
     return information
 
 
 def reset():
 
-    global position, pos_index, dots, p1_lines, p2_lines
+    global position, pos_index, dots, p1_lines, p2_lines, player_cul_choice
     global temp_line, player_1_boxes, player_2_boxes, lines
-    global selection, bad_line, turn, select, prompt, win
-    global colour_choice, select_prev, choice
+    global selection, bad_line, turn, select, prompt, win, select_cul
+    global colour_choice, select_prev, choice, menu_prompt, player_cul_choice
+    global colour_choice_1, colour_choice_2
 
     fill(0)
     stroke(0)
     strokeWeight(1)
 
+    select_cul = 0
+
     colour_choice = 0
     select_prev = 0
 
     choice = "P1"
+
+    player_cul_choice = 0
+
+    colour_choice_1 = 1
+    colour_choice_2 = 2
 
     position = []
     pos_index = 0
@@ -689,13 +791,14 @@ def reset():
 
     win = 0
 
-    # print("reset it")
+    player_cul_choice
 
     selection = False
     bad_line = False
     turn = "p1"
 
     prompt = False
+    menu_prompt = False
 
     select = 1
 
