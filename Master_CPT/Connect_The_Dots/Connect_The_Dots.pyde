@@ -279,7 +279,12 @@ def draw():
         text("Connect The Dots", width/2 - 135, 40)
 
         textSize(25)
-        text("Menu", width/2 - 45, 100)
+        if isinstance(select, int):
+            menu_text = "Menu"
+        else:
+            menu_text = select
+
+        text(menu_text, width/2 - 45, 100)
 
     elif state == "game":
 
