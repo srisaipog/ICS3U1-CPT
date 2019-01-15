@@ -24,8 +24,6 @@ colour_choice_1 = 1
 
 colour_choice_2 = 2
 
-# etc resettable
-
 player_cul_choice = 0
 
 colour_choice = 0
@@ -114,6 +112,7 @@ def setup():
     pos_index = 0
     position = dots[pos_index]
 
+    # Creating Line Distances
     LINE_DIS_1 = sqrt(((dots[0][0] - dots[1][0]) ** 2) +
                       ((dots[0][1] - dots[1][1]) ** 2))
 
@@ -136,36 +135,42 @@ def draw():
     global colour_choice, selection, choice, prompt, menu_prompt
     global colour_choice_1, colour_choice_2, player_cul_choice
 
-    # print(select)
+    # print(p1_lines)
 
+    # Draw the folling in the menu
     if state == "menu":
         # print(colour_choice, colour_choice_1, colour_choice_2)
 
+        # Drawing the rectangles for the menu selection
         background(200)
         fill(255)
         stroke(0)
         strokeWeight(3)
 
         for i in range(1, 5):
-            rect(width/2 - 100, 75 + (height/7) * i, (width/5)*2, (width/20)*2)
+            rect(width / 2 - 100, 75 + (height / 7) * i,
+                 (width / 5) * 2, (width / 20) * 2)
 
         fill(240, 230, 140)
+        # If variable select is a string, the code will explode
+        # When variable select is a string, it means that
+        # a sub meenu has been selected
         try:
-            rect(width/2 - 100, 75 + (height/7) * select,
-                 (width/5)*2, (width/20)*2)
+            rect(width / 2 - 100, 75 + (height / 7) * select,
+                 (width / 5) * 2, (width / 20) * 2)
 
             textSize(20)
 
             fill(0)
 
             for j in range(1, 5):
-                text(OPTIONS[j-1][1], width/2 - 92, 100 + (height/7) * j)
+                text(OPTIONS[j - 1][1], width / 2 - 92, 100 + (height / 7) * j)
 
             textSize(20)
             fill(0)
             text(("""     Use the ARROW KEYS to navigate and
             ENTER/SPACE KEYS to select"""),
-                 width/2 - 200, height - 50)
+                 width / 2 - 200, height - 50)
 
         except:
             textSize(15)
@@ -173,6 +178,7 @@ def draw():
 
             fill(44, 57, 142)
 
+            # Loading the sub menus
             if select == "Play":
                 state = "game"
             elif select == "Instructions":
@@ -245,6 +251,7 @@ def draw():
                 PLAYER_1_COLOUR = p1_choice
                 PLAYER_2_COLOUR = p2_choice
 
+                # Warning the player if both players have the same colour
                 if p1_choice == p2_choice:
                     fill(255, 0, 0)
                     textSize(19)
@@ -276,7 +283,7 @@ def draw():
         fill(0)
 
         textSize(30)
-        text("Connect The Dots", width/2 - 135, 40)
+        text("Connect The Dots", width / 2 - 135, 40)
 
         textSize(25)
         if isinstance(select, int):
@@ -284,8 +291,9 @@ def draw():
         else:
             menu_text = select
 
-        text(menu_text, width/2 - 45, 100)
+        text(menu_text, width / 2 - 45, 100)
 
+    # Draw the following stuff during the game
     elif state == "game":
 
         # Assert functions when game starts
@@ -304,18 +312,21 @@ def draw():
 
         temp = False
 
+        # Checking if we should add a new box
         if boxes:
             for boxx in boxes:
                 if turn == "p2":
                     if (boxx not in player_1_boxes and
-                       boxx not in player_2_boxes):
-                            player_1_boxes.append(boxx)
-                            temp = True
+                            boxx not in player_2_boxes):
+                        player_1_boxes.append(boxx)
+                        temp = True
                 elif turn == "p1":
                     if (boxx not in player_2_boxes and
-                       boxx not in player_1_boxes):
-                            player_2_boxes.append(boxx)
-                            temp = True
+                            boxx not in player_1_boxes):
+                        player_2_boxes.append(boxx)
+                        temp = True
+
+        # Changing the turn
         if temp and turn == "p1":
             turn = "p2"
         elif temp and turn == "p2":
@@ -328,17 +339,18 @@ def draw():
 
         noStroke()
 
+        # Drawing all of the boxes
         fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
         for dabba in player_1_boxes:
-            rect(dabba[0] + (LINE_DIS_1/6.4), dabba[1] + (LINE_DIS_1/6.4),
-                 (LINE_DIS_1) - (LINE_DIS_1/3.2),
-                 (LINE_DIS_2) - (LINE_DIS_2/2.4))
+            rect(dabba[0] + (LINE_DIS_1 / 6.4), dabba[1] + (LINE_DIS_1 / 6.4),
+                 (LINE_DIS_1) - (LINE_DIS_1 / 3.2),
+                 (LINE_DIS_2) - (LINE_DIS_2 / 2.4))
 
         fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
         for dabba in player_2_boxes:
-            rect(dabba[0] + (LINE_DIS_1/6.4), dabba[1] + (LINE_DIS_1/6.4),
-                 (LINE_DIS_1) - (LINE_DIS_1/3.2),
-                 (LINE_DIS_2) - (LINE_DIS_2/2.4))
+            rect(dabba[0] + (LINE_DIS_1 / 6.4), dabba[1] + (LINE_DIS_1 / 6.4),
+                 (LINE_DIS_1) - (LINE_DIS_1 / 3.2),
+                 (LINE_DIS_2) - (LINE_DIS_2 / 2.4))
 
         fill(178, 34, 34)
         textSize(15)
@@ -355,6 +367,7 @@ def draw():
                PLAYER_1_COLOUR[1],
                PLAYER_1_COLOUR[2])
 
+        # Drawing the score and people
         if turn == "p1":
             strokeWeight(5)
         else:
@@ -362,18 +375,20 @@ def draw():
 
         x = width - 100
 
-        line((width/20) * 3, (height/10) * 10, (width/20) * 2, (height/10) * 9)
-        line((width/20) * 1, (height/10) * 10, (width/20) * 2, (height/10) * 9)
+        line((width / 20) * 3, (height / 10) * 10,
+             (width / 20) * 2, (height / 10) * 9)
+        line((width / 20) * 1, (height / 10) * 10,
+             (width / 20) * 2, (height / 10) * 9)
 
-        line((width/20) * 2, (height/10) * 9,
-             (width/20) * 2, (height/10) * 7.75)
+        line((width / 20) * 2, (height / 10) * 9,
+             (width / 20) * 2, (height / 10) * 7.75)
 
-        line((width/20) * 2, (height/10) * 8.5,
-             (width/20) * 3, (height/10) * 8.25)
-        line((width/20) * 2, (height/10) * 8.5,
-             (width/20) * 1, (height/10) * 8.25)
+        line((width / 20) * 2, (height / 10) * 8.5,
+             (width / 20) * 3, (height / 10) * 8.25)
+        line((width / 20) * 2, (height / 10) * 8.5,
+             (width / 20) * 1, (height / 10) * 8.25)
 
-        ellipse((width/20) * 2, (height/10) * 7.75, 50, 50)
+        ellipse((width / 20) * 2, (height / 10) * 7.75, 50, 50)
 
         # Person 2
         fill(PLAYER_2_COLOUR[0],
@@ -388,24 +403,24 @@ def draw():
         else:
             strokeWeight(1)
 
-        line((width/20) * 3 + x, (height/10) * 10,
-             (width/20) * 2 + x, (height/10) * 9)
-        line((width/20) * 1 + x, (height/10) * 10,
-             (width/20) * 2 + x, (height/10) * 9)
+        line((width / 20) * 3 + x, (height / 10) * 10,
+             (width / 20) * 2 + x, (height / 10) * 9)
+        line((width / 20) * 1 + x, (height / 10) * 10,
+             (width / 20) * 2 + x, (height / 10) * 9)
 
-        line((width/20) * 2 + x, (height/10) * 9,
-             (width/20) * 2 + x, (height/10) * 7.75)
+        line((width / 20) * 2 + x, (height / 10) * 9,
+             (width / 20) * 2 + x, (height / 10) * 7.75)
 
-        line((width/20) * 2 + x, (height/10) * 8.5,
-             (width/20) * 3 + x, (height/10) * 8.25)
-        line((width/20) * 2 + x, (height/10) * 8.5,
-             (width/20) * 1 + x, (height/10) * 8.25)
+        line((width / 20) * 2 + x, (height / 10) * 8.5,
+             (width / 20) * 3 + x, (height / 10) * 8.25)
+        line((width / 20) * 2 + x, (height / 10) * 8.5,
+             (width / 20) * 1 + x, (height / 10) * 8.25)
 
-        ellipse((width/20) * 2 + x, (height/10) * 7.75, 50, 50)
+        ellipse((width / 20) * 2 + x, (height / 10) * 7.75, 50, 50)
 
         fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
         text("P2 Score: " + str((len(player_2_boxes))),
-             width - 110, height - 180)
+             width - 125, height - 180)
 
         fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
         text("P1 Score: " + str((len(player_1_boxes))), 5, height - 180)
@@ -418,7 +433,7 @@ def draw():
         for dot in dots:
             ellipse(dot[0], dot[1], DOT_SIZE, DOT_SIZE)
 
-        strokeWeight(width/100)
+        strokeWeight(width / 100)
 
         # Drawing Player Lines
         for write in p1_lines:
@@ -432,11 +447,11 @@ def draw():
         # Writing Who's Turn It Is
         fill(178, 34, 34)
         if turn == "p1":
-            textSize((width + height)//25)
-            text("Player 1", (width/10) * 3.35, height - 75)
+            textSize((width + height) // 25)
+            text("Player 1", (width / 10) * 3.35, height - 75)
         elif turn == "p2":
-            textSize((width + height)//25)
-            text("Player 2", (width/10) * 3.35, height - 75)
+            textSize((width + height) // 25)
+            text("Player 2", (width / 10) * 3.35, height - 75)
 
         # Telling the player if they are a noob
         if bad_line:
@@ -444,39 +459,8 @@ def draw():
             text((turn.upper() + ", Please put a proper line"),
                  50, 50)
 
-        if end_game(GRID_WID, GRID_LEN, player_1_boxes, player_2_boxes):
-            background(238, 232, 170)
-            p1_score = len(player_1_boxes)
-            p2_score = len(player_2_boxes)
-
-            if p1_score > p2_score:
-                win = "Player 1"
-            elif p1_score < p2_score:
-                win = "Player 2"
-            else:
-                win = "Draw"
-
-            fill(0)
-
-            textSize(40)
-
-            if win != "Draw":
-                text((str(win) + " has won!"), 80, 50)
-            else:
-                text("It's a draw!", 100, 50)
-
-            textSize(30)
-
-            text("Score", 175, 150)
-
-            textSize(25)
-            text(("P1: " + str(p1_score)), 100, 200)
-            text(("P2: " + str(p2_score)), 250, 200)
-
-            textSize(20)
-
-            text("Press any key to return to menu", 60, height - 50)
-
+        # Asking the user if they are sure
+        # they want to do something
         if prompt:
             fill(255)
             stroke(0)
@@ -532,7 +516,7 @@ def draw():
             strokeWeight(1)
 
             if (temp_dis == LINE_DIS_1 or
-               temp_dis == LINE_DIS_2):
+                    temp_dis == LINE_DIS_2):
                 stroke(0, 250, 0)
             else:
                 stroke(255, 0, 0)
@@ -540,8 +524,55 @@ def draw():
             line(position[0], position[1], temp_line[0][0], temp_line[0][1])
 
             # print(temp_dis, LINE_DIS_1, LINE_DIS_2)
+        # Finding out if the game is done
+        # if end_game(GRID_WID, GRID_LEN, player_1_boxes, player_2_boxes):
+        if True:
+            background(238, 232, 170)
+
+            p1_score = len(player_1_boxes)
+            p2_score = len(player_2_boxes)
+
+            # p1_score = 20
+            # p2_score = 22
+
+            if p1_score > p2_score:
+                win = "Player 1"
+                fill(PLAYER_1_COLOUR[0],
+                     PLAYER_1_COLOUR[1],
+                     PLAYER_1_COLOUR[2])
+            elif p1_score < p2_score:
+                win = "Player 2"
+                fill(PLAYER_2_COLOUR[0],
+                     PLAYER_2_COLOUR[1],
+                     PLAYER_2_COLOUR[2])
+            else:
+                win = "Draw"
+
+            textSize(30)
+
+            text("Score", 175, 150)
+
+            textSize(25)
+
+            text(("P1: " + str(p1_score)), 100, 200)
+            text(("P2: " + str(p2_score)), 250, 200)
+
+            fill(0)
+
+            textSize(40)
+
+            if win != "Draw":
+                text((str(win) + " has won!"), 80, 50)
+            else:
+                text("It's a draw!", 100, 50)
+
+            textSize(20)
+
+            text("Press any key to return to menu", 60, height - 50)
 
 
+# End game function
+# Tells if the game has ended or not
 def end_game(wid, leng, p1_box, p2_box):
     total_boxes = (wid - 1) * (leng - 1)
     cur_boxes = len(p1_box) + len(p2_box)
@@ -552,6 +583,7 @@ def end_game(wid, leng, p1_box, p2_box):
         return False
 
 
+# Tests and assert statements
 def tests(lines, dots):
     for linee in lines:
         assert linee[0] in dots, "rouge line detected"
@@ -561,16 +593,34 @@ def tests(lines, dots):
 
     for p1 in player_1_boxes:
         for p2 in player_2_boxes:
-            assert p2 == p1, "which box is which"
+            assert p2 != p1, "which box is which"
 
     i = pos_index
     while i in position:
         assert isinstance(position[i], list), "not a good position"
         i += 1
 
+    for lin in p1_lines:
+        assert lin in lines, "you have a fake line..."
+        assert lin not in p2_lines, "2 players have same line..."
 
+    for lin in p2_lines:
+        assert lin in lines, "you have a fake line..."
+        assert lin not in p1_lines, "2 players have same line..."
+
+    temp = 6
+    while temp != colour_choice_1:
+        temp -= 1
+    assert temp == colour_choice_1, "You went wrong when choosing a colour"
+
+    temp = 6
+    while temp != colour_choice_2:
+        temp -= 1
+    assert temp == colour_choice_2, "You went wrong when choosing a colour"
+
+
+# Finding out the boxes that have been made
 def makes_box(dots, lines):
-
     box_cors = []
 
     for dott in dots:
@@ -602,11 +652,15 @@ def makes_box(dots, lines):
         return box_cors
 
 
+# If a key has been pressed,
+# this sea shall be traversed
 def keyPressed():
+    # Getting all the global variables
     global state, select, colour_choice, select_prev
     global menu_prompt, prompt, colour_choice_1, colour_choice_2
     # print(keyCode)
 
+    # If we are in the game
     if state == "game":
         # Importing Global Variables
         global position, dots, pos_index, selection, win
@@ -627,7 +681,7 @@ def keyPressed():
             position = dots[pos_index]
 
         # Moving Down
-        elif keyCode == KEY_DOWN:
+        if keyCode == KEY_DOWN:
             # print("DOWN")
 
             pos_index += GRID_LEN
@@ -646,7 +700,7 @@ def keyPressed():
             pos_index -= 1
 
             if ((pos_index + 1) % GRID_WID == 0 or
-               pos_index == -1):
+                    pos_index == -1):
                 pos_index += GRID_WID
 
             position = dots[pos_index]
@@ -704,6 +758,8 @@ def keyPressed():
 
                 # print(str(equivalent))
                 # print(lines)
+
+        # If the user is going to restart/menu
         elif ((keyCode == KEY_R) or (keyCode == KEY_N) or
               (keyCode == KEY_Y) or (keyCode == KEY_M)):
             menu(keyCode)
@@ -712,21 +768,32 @@ def keyPressed():
             reset()
             state = "menu"
 
+    # If we are in the menu
     elif state == "menu":
         global player_cul_choice, select_cul, colour_choice
 
         # print(select)
 
+        temp_protect = False
+
+        # Going back to menu after pressing M
         if keyCode == KEY_M:
             if isinstance(select, str):
                 select = select_prev
+            """
+            if choice == "P1":
+                select_cul = colour_choice_1
+            elif choice == "P2":
+                select_cul = colour_choice_2
+            """
 
             for op in OPTIONS:
                 if select in op:
                     select = op[0]
 
+        # Moving up, down, left, right
         if (keyCode == KEY_UP or keyCode == KEY_DOWN or
-           keyCode == KEY_LEFT or keyCode == KEY_RIGHT):
+                keyCode == KEY_LEFT or keyCode == KEY_RIGHT):
 
             try:
                 if keyCode == KEY_UP or keyCode == KEY_LEFT:
@@ -742,10 +809,12 @@ def keyPressed():
                 elif select < 1:
                     select = 4
 
+        # Selecting something
         elif (keyCode == KEY_SPACE or keyCode == KEY_ENTER and
               select != "Options"):
             try:
-                select = OPTIONS[select-1][1]
+                select = OPTIONS[select - 1][1]
+                temp_protect = True
             except:
                 select = select
 
@@ -759,12 +828,14 @@ def keyPressed():
         if keyCode == KEY_DOWN or keyCode == KEY_LEFT and select == "Options":
             select_cul -= 1
 
+        # Selecting something
         if (keyCode == KEY_ENTER or keyCode == KEY_SPACE and
-           select == "Options"):
-            if choice == "P1":
-                colour_choice_1 = select_cul
-            elif choice == "P2":
-                colour_choice_2 = select_cul
+                select == "Options"):
+            if not temp_protect:
+                if choice == "P1":
+                    colour_choice_1 = select_cul
+                elif choice == "P2":
+                    colour_choice_2 = select_cul
 
         if select_cul < 1:
             select_cul = 6
@@ -775,6 +846,10 @@ def keyPressed():
             select_prev = select
 
 
+# Figuring out if
+# Game should restart
+# OR
+# Go to menu
 def menu(key_given):
     global state, select
     global prompt, menu_prompt
@@ -783,7 +858,7 @@ def menu(key_given):
 
     if key_given == KEY_R:
         prompt = True
-    elif key_given == KEY_M:
+    if key_given == KEY_M:
         menu_prompt = True
 
     if prompt:
@@ -804,12 +879,12 @@ def menu(key_given):
     return prompt
 
 
+# Storing the instructions here
 def instructions():
     inst = """
     How to play this game:
     - The objective of this game is to create lines to form boxes
     - The person with the most boxes at the end wins.
-
     CONTROLS
     - Use the arrow keys to move the cursor
     - Use enter/space to select a dot
@@ -825,21 +900,20 @@ def instructions():
     return inst
 
 
+# Storing the information here
 def info():
     information = """
     This game was created by:
     Sridhar Sairam for his ICS3U1 CPT.
-
     The final version of this game was made on:
         15 January 2019
-
     This game was made using Processing for Python.
-
     For further details, please contact Sridhar Sairam.
     """
     return information
 
 
+# Resetting all of the global variables
 def reset():
 
     global position, pos_index, dots, p1_lines, p2_lines, player_cul_choice
