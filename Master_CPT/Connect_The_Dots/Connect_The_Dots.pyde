@@ -525,8 +525,7 @@ def draw():
 
             # print(temp_dis, LINE_DIS_1, LINE_DIS_2)
         # Finding out if the game is done
-        # if end_game(GRID_WID, GRID_LEN, player_1_boxes, player_2_boxes):
-        if True:
+        if end_game(GRID_WID, GRID_LEN, player_1_boxes, player_2_boxes):
             background(238, 232, 170)
 
             p1_score = len(player_1_boxes)
