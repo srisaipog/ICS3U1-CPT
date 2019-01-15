@@ -437,8 +437,8 @@ def draw():
             textSize(15)
             text("""                 Are you sure you want
                  to return to menu?
-                 Your game will NOT
-                 be lost""", 40, 130)
+                 Your game will
+                 be saved""", 40, 130)
             text("Y = YES   N = NO", 120, 250)
 
         noStroke()
