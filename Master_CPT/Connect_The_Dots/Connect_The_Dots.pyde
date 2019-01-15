@@ -169,7 +169,9 @@ def draw():
 
         except:
             textSize(15)
-            background(150)
+            background(180)
+
+            fill(44, 57, 142)
 
             if select == "Play":
                 state = "game"
@@ -202,7 +204,7 @@ def draw():
 
                     textSize(20)
                     fill(255)
-                    text(str(i + 1), (50 * i) + 20 + 50, 140)
+                    # text(str(i + 1), (50 * i) + 20 + 50, 140)
 
                 if player_cul_choice == 1:
                     choice = "P1"
@@ -242,6 +244,15 @@ def draw():
 
                 PLAYER_1_COLOUR = p1_choice
                 PLAYER_2_COLOUR = p2_choice
+
+                if p1_choice == p2_choice:
+                    fill(255, 0, 0)
+                    textSize(19)
+                    text("CAUTION: Both players are using the same colour",
+                         10, height - 230)
+                    text("This may result in confusion during gameplay",
+                         10, height - 200)
+                    fill(0)
 
                 fill(PLAYER_1_COLOUR[0],
                      PLAYER_1_COLOUR[1],
