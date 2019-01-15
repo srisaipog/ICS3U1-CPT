@@ -147,18 +147,19 @@ def draw():
         strokeWeight(3)
 
         for i in range(1, 5):
-            rect(width/2 - 100, (height/5) * i, (width/5)*2, (width/20)*2)
+            rect(width/2 - 100, 75 + (height/7) * i, (width/5)*2, (width/20)*2)
 
         fill(240, 230, 140)
         try:
-            rect(width/2 - 100, (height/5) * select, (width/5)*2, (width/20)*2)
+            rect(width/2 - 100, 75 + (height/7) * select,
+                 (width/5)*2, (width/20)*2)
 
             textSize(20)
 
             fill(0)
 
             for j in range(1, 5):
-                text(OPTIONS[j-1][1], width/2 - 92, ((height/5) * j) + 25)
+                text(OPTIONS[j-1][1], width/2 - 92, 100 + (height/7) * j)
 
             textSize(20)
             fill(0)
@@ -168,7 +169,9 @@ def draw():
 
         except:
             textSize(15)
-            background(150)
+            background(180)
+
+            fill(44, 57, 142)
 
             if select == "Play":
                 state = "game"
@@ -201,7 +204,7 @@ def draw():
 
                     textSize(20)
                     fill(255)
-                    text(str(i + 1), (50 * i) + 20 + 50, 140)
+                    # text(str(i + 1), (50 * i) + 20 + 50, 140)
 
                 if player_cul_choice == 1:
                     choice = "P1"
@@ -241,6 +244,15 @@ def draw():
 
                 PLAYER_1_COLOUR = p1_choice
                 PLAYER_2_COLOUR = p2_choice
+
+                if p1_choice == p2_choice:
+                    fill(255, 0, 0)
+                    textSize(19)
+                    text("CAUTION: Both players are using the same colour",
+                         10, height - 230)
+                    text("This may result in confusion during gameplay",
+                         10, height - 200)
+                    fill(0)
 
                 fill(PLAYER_1_COLOUR[0],
                      PLAYER_1_COLOUR[1],
@@ -343,41 +355,6 @@ def draw():
         for dot in dots:
             ellipse(dot[0], dot[1], DOT_SIZE, DOT_SIZE)
 
-        # Setting color of position cursor and drawing cursor
-        if selection:
-            fill(SELECTION_COLOUR[0], SELECTION_COLOUR[1], SELECTION_COLOUR[2])
-        else:
-            if turn == "p1":
-                fill(CURSOR_COLOUR_P1[0],
-                     CURSOR_COLOUR_P1[1],
-                     CURSOR_COLOUR_P1[2])
-            elif turn == "p2":
-                fill(CURSOR_COLOUR_P2[0],
-                     CURSOR_COLOUR_P2[1],
-                     CURSOR_COLOUR_P2[2])
-
-        ellipse(position[0], position[1], CURSOR_SIZE, CURSOR_SIZE)
-
-        # Drawing Cursor
-        fill(SELECTABLE_COLOUR[0], SELECTABLE_COLOUR[2], SELECTABLE_COLOUR[2])
-        if selection:
-            ellipse(temp_line[0][0], temp_line[0][1], DOT_SIZE, DOT_SIZE)
-
-            temp_dis = sqrt(((position[0] - temp_line[0][0]) ** 2) +
-                            ((position[1] - temp_line[0][1]) ** 2))
-
-            strokeWeight(01)
-
-            if (temp_dis == LINE_DIS_1 or
-               temp_dis == LINE_DIS_2):
-                stroke(0, 250, 0)
-            else:
-                stroke(255, 0, 0)
-
-            line(position[0], position[1], temp_line[0][0], temp_line[0][1])
-
-            # print(temp_dis, LINE_DIS_1, LINE_DIS_2)
-
         strokeWeight(width/100)
 
         # Drawing Player Lines
@@ -463,6 +440,43 @@ def draw():
                  Your game will NOT
                  be lost""", 40, 130)
             text("Y = YES   N = NO", 120, 250)
+
+        noStroke()
+
+        # Setting color of position cursor and drawing cursor
+        if selection:
+            fill(SELECTION_COLOUR[0], SELECTION_COLOUR[1], SELECTION_COLOUR[2])
+        else:
+            if turn == "p1":
+                fill(CURSOR_COLOUR_P1[0],
+                     CURSOR_COLOUR_P1[1],
+                     CURSOR_COLOUR_P1[2])
+            elif turn == "p2":
+                fill(CURSOR_COLOUR_P2[0],
+                     CURSOR_COLOUR_P2[1],
+                     CURSOR_COLOUR_P2[2])
+        ellipse(position[0], position[1], CURSOR_SIZE, CURSOR_SIZE)
+
+        # Drawing Cursor
+        fill(SELECTABLE_COLOUR[0], SELECTABLE_COLOUR[2], SELECTABLE_COLOUR[2])
+        if selection:
+            noStroke()
+            ellipse(temp_line[0][0], temp_line[0][1], DOT_SIZE, DOT_SIZE)
+
+            temp_dis = sqrt(((position[0] - temp_line[0][0]) ** 2) +
+                            ((position[1] - temp_line[0][1]) ** 2))
+
+            strokeWeight(1)
+
+            if (temp_dis == LINE_DIS_1 or
+               temp_dis == LINE_DIS_2):
+                stroke(0, 250, 0)
+            else:
+                stroke(255, 0, 0)
+
+            line(position[0], position[1], temp_line[0][0], temp_line[0][1])
+
+            # print(temp_dis, LINE_DIS_1, LINE_DIS_2)
 
 
 def end_game(wid, leng, p1_box, p2_box):
