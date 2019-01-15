@@ -289,7 +289,7 @@ def draw():
     elif state == "game":
 
         # Assert functions when game starts
-        if frameCount < 300:
+        if frameCount:
             tests(lines, dots)
 
         global turn
@@ -342,15 +342,73 @@ def draw():
 
         fill(178, 34, 34)
         textSize(15)
-        text("Points:", 10, 30)
+        # text("Points:", (width/20) * 8, height - 180)
 
         textSize(20)
 
+        # DRAWING PLAYERS CHARACTERS/SCORE
+        # Person 1
+        fill(PLAYER_1_COLOUR[0],
+             PLAYER_1_COLOUR[1],
+             PLAYER_1_COLOUR[2])
+        stroke(PLAYER_1_COLOUR[0],
+               PLAYER_1_COLOUR[1],
+               PLAYER_1_COLOUR[2])
+
+        if turn == "p1":
+            strokeWeight(5)
+        else:
+            strokeWeight(1)
+
+        x = width - 100
+
+        line((width/20) * 3, (height/10) * 10, (width/20) * 2, (height/10) * 9)
+        line((width/20) * 1, (height/10) * 10, (width/20) * 2, (height/10) * 9)
+
+        line((width/20) * 2, (height/10) * 9,
+             (width/20) * 2, (height/10) * 7.75)
+
+        line((width/20) * 2, (height/10) * 8.5,
+             (width/20) * 3, (height/10) * 8.25)
+        line((width/20) * 2, (height/10) * 8.5,
+             (width/20) * 1, (height/10) * 8.25)
+
+        ellipse((width/20) * 2, (height/10) * 7.75, 50, 50)
+
+        # Person 2
+        fill(PLAYER_2_COLOUR[0],
+             PLAYER_2_COLOUR[1],
+             PLAYER_2_COLOUR[2])
+        stroke(PLAYER_2_COLOUR[0],
+               PLAYER_2_COLOUR[1],
+               PLAYER_2_COLOUR[2])
+
+        if turn == "p2":
+            strokeWeight(5)
+        else:
+            strokeWeight(1)
+
+        line((width/20) * 3 + x, (height/10) * 10,
+             (width/20) * 2 + x, (height/10) * 9)
+        line((width/20) * 1 + x, (height/10) * 10,
+             (width/20) * 2 + x, (height/10) * 9)
+
+        line((width/20) * 2 + x, (height/10) * 9,
+             (width/20) * 2 + x, (height/10) * 7.75)
+
+        line((width/20) * 2 + x, (height/10) * 8.5,
+             (width/20) * 3 + x, (height/10) * 8.25)
+        line((width/20) * 2 + x, (height/10) * 8.5,
+             (width/20) * 1 + x, (height/10) * 8.25)
+
+        ellipse((width/20) * 2 + x, (height/10) * 7.75, 50, 50)
+
         fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
-        text("P2: " + str((len(player_2_boxes))), 75, 50)
+        text("P2 Score: " + str((len(player_2_boxes))),
+             width - 110, height - 180)
 
         fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
-        text("P1: " + str((len(player_1_boxes))), 75, 25)
+        text("P1 Score: " + str((len(player_1_boxes))), 5, height - 180)
 
         # Setting attributes of dots
         fill(DOT_COLOUR[0], DOT_COLOUR[1], DOT_COLOUR[2])
@@ -375,16 +433,16 @@ def draw():
         fill(178, 34, 34)
         if turn == "p1":
             textSize((width + height)//25)
-            text("Player 1", width/2 - width/9, height/15)
+            text("Player 1", (width/10) * 3.35, height - 75)
         elif turn == "p2":
             textSize((width + height)//25)
-            text("Player 2", width/2 - width/9, height/15)
+            text("Player 2", (width/10) * 3.35, height - 75)
 
         # Telling the player if they are a noob
         if bad_line:
             textSize(30)
             text((turn.upper() + ", Please put a proper line"),
-                 50, height - 50)
+                 50, 50)
 
         if end_game(GRID_WID, GRID_LEN, player_1_boxes, player_2_boxes):
             background(238, 232, 170)
@@ -501,6 +559,15 @@ def tests(lines, dots):
 
     assert position in dots, "you're off the tracks"
 
+    for p1 in player_1_boxes:
+        for p2 in player_2_boxes:
+            assert p2 == p1, "which box is which"
+
+    i = pos_index
+    while i in position:
+        assert isinstance(position[i], list), "not a good position"
+        i += 1
+
 
 def makes_box(dots, lines):
 
@@ -524,7 +591,7 @@ def makes_box(dots, lines):
             for lin in lines:
                 if (lin[0] in lin_1_4 and lin[1] in lin_1_4):
                     lines_out_of_4 += 1
-                    # (lines_out_of_4)
+                    # print(lines_out_of_4)
 
                 if lines_out_of_4 == 4:
                     box_cors.append(a)
@@ -822,4 +889,3 @@ def reset():
     select = 1
 
     setup()
-
