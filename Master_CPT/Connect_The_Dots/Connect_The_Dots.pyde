@@ -495,7 +495,6 @@ def draw():
             line(position[0], position[1], temp_line[0][0], temp_line[0][1])
 
             # print(temp_dis, LINE_DIS_1, LINE_DIS_2)
-
         # Asking the user if they are sure
         # they want to do something
         if prompt:
@@ -568,8 +567,64 @@ def draw():
             else:
                 text("It's a draw!", 100, 50)
 
-            textSize(20)
+            if win == "Player 1":
+                strokeWeight(10)
+            else:
+                strokeWeight(1)
 
+            fill(PLAYER_1_COLOUR[0],
+                 PLAYER_1_COLOUR[1],
+                 PLAYER_1_COLOUR[2])
+            stroke(PLAYER_1_COLOUR[0],
+                   PLAYER_1_COLOUR[1],
+                   PLAYER_1_COLOUR[2])
+
+            x = width - 100
+
+            line((width / 20) * 3, (height / 10) * 10,
+                 (width / 20) * 2, (height / 10) * 9)
+            line((width / 20) * 1, (height / 10) * 10,
+                 (width / 20) * 2, (height / 10) * 9)
+
+            line((width / 20) * 2, (height / 10) * 9,
+                 (width / 20) * 2, (height / 10) * 7.75)
+
+            line((width / 20) * 2, (height / 10) * 8.5,
+                 (width / 20) * 3, (height / 10) * 8.25)
+            line((width / 20) * 2, (height / 10) * 8.5,
+                 (width / 20) * 1, (height / 10) * 8.25)
+
+            ellipse((width / 20) * 2, (height / 10) * 7.75, 50, 50)
+
+            # Person 2
+            fill(PLAYER_2_COLOUR[0],
+                 PLAYER_2_COLOUR[1],
+                 PLAYER_2_COLOUR[2])
+            stroke(PLAYER_2_COLOUR[0],
+                   PLAYER_2_COLOUR[1],
+                   PLAYER_2_COLOUR[2])
+
+            if win == "Player 2":
+                strokeWeight(10)
+            else:
+                strokeWeight(1)
+
+            line((width / 20) * 3 + x, (height / 10) * 10,
+                 (width / 20) * 2 + x, (height / 10) * 9)
+            line((width / 20) * 1 + x, (height / 10) * 10,
+                 (width / 20) * 2 + x, (height / 10) * 9)
+
+            line((width / 20) * 2 + x, (height / 10) * 9,
+                 (width / 20) * 2 + x, (height / 10) * 7.75)
+
+            line((width / 20) * 2 + x, (height / 10) * 8.5,
+                 (width / 20) * 3 + x, (height / 10) * 8.25)
+            line((width / 20) * 2 + x, (height / 10) * 8.5,
+                 (width / 20) * 1 + x, (height / 10) * 8.25)
+
+            ellipse((width / 20) * 2 + x, (height / 10) * 7.75, 50, 50)
+
+            textSize(20)
             text("Press any key to return to menu", 60, height - 50)
 
 
