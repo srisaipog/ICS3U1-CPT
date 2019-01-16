@@ -459,37 +459,6 @@ def draw():
             text((turn.upper() + ", Please put a proper line"),
                  50, 50)
 
-        # Asking the user if they are sure
-        # they want to do something
-        if prompt:
-            fill(255)
-            stroke(0)
-            strokeWeight(5)
-
-            rect(90, 100, 300, 350)
-            fill(0)
-            textSize(25)
-            text("""                 Are you sure you want
-                 to restart the game?
-                 
-                 Your game will
-                 be lost.""", -30, 150)
-            text("Y = YES   N = NO", 120, 400)
-        elif menu_prompt:
-            fill(255)
-            stroke(0)
-            strokeWeight(5)
-
-            rect(90, 100, 300, 350)
-            fill(0)
-            textSize(25)
-            text("""                 Are you sure you want
-                 to return to the menu?
-                 
-                 Your game will
-                 be saved.""", -30, 150)
-            text("Y = YES   N = NO", 120, 400)
-
         noStroke()
 
         # Setting color of position cursor and drawing cursor
@@ -526,6 +495,38 @@ def draw():
             line(position[0], position[1], temp_line[0][0], temp_line[0][1])
 
             # print(temp_dis, LINE_DIS_1, LINE_DIS_2)
+
+        # Asking the user if they are sure
+        # they want to do something
+        if prompt:
+            fill(255)
+            stroke(0)
+            strokeWeight(5)
+
+            rect(90, 100, 300, 350)
+            fill(0)
+            textSize(25)
+            text("""                 Are you sure you want
+                 to restart the game?
+
+                 Your game will
+                 be lost.""", -30, 150)
+            text("Y = YES   N = NO", 120, 400)
+        elif menu_prompt:
+            fill(255)
+            stroke(0)
+            strokeWeight(5)
+
+            rect(90, 100, 300, 350)
+            fill(0)
+            textSize(25)
+            text("""                 Are you sure you want
+                 to return to the menu?
+
+                 Your game will
+                 be saved.""", -30, 150)
+            text("Y = YES   N = NO", 120, 400)
+
         # Finding out if the game is done
         if end_game(GRID_WID, GRID_LEN, player_1_boxes, player_2_boxes):
             background(238, 232, 170)
