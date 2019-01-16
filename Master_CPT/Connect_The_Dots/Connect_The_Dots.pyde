@@ -672,7 +672,7 @@ def keyPressed():
         # depending on key pressed
 
         # Moving Up
-        if keyCode == KEY_UP:
+        if keyCode == KEY_UP and (not (prompt or menu_prompt)):
             # print("UP")
 
             pos_index -= GRID_LEN
@@ -683,7 +683,7 @@ def keyPressed():
             position = dots[pos_index]
 
         # Moving Down
-        if keyCode == KEY_DOWN:
+        if keyCode == KEY_DOWN and (not (prompt or menu_prompt)):
             # print("DOWN")
 
             pos_index += GRID_LEN
@@ -696,7 +696,7 @@ def keyPressed():
                 position = dots[pos_index]
 
         # Moving Left
-        elif keyCode == KEY_LEFT:
+        elif keyCode == KEY_LEFT and (not (prompt or menu_prompt)):
             # print("LEFT")
 
             pos_index -= 1
@@ -708,7 +708,7 @@ def keyPressed():
             position = dots[pos_index]
 
         # Moving Right
-        elif keyCode == KEY_RIGHT:
+        elif keyCode == KEY_RIGHT and (not (prompt or menu_prompt)):
             # print("RIGHT")
 
             pos_index += 1
@@ -719,7 +719,8 @@ def keyPressed():
             position = dots[pos_index]
 
         # Selecting a dot
-        elif (keyCode == KEY_ENTER or keyCode == KEY_SPACE):
+        elif ((keyCode == KEY_ENTER or keyCode == KEY_SPACE) and
+              (not (prompt or menu_prompt))):
 
             if not selection:
                 temp_line = [position]
