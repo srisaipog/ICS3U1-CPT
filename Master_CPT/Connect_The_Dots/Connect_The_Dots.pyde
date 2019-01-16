@@ -464,29 +464,31 @@ def draw():
         if prompt:
             fill(255)
             stroke(0)
-            strokeWeight(1)
+            strokeWeight(5)
 
-            rect(100, 100, 200, 200)
+            rect(90, 100, 300, 350)
             fill(0)
-            textSize(15)
+            textSize(25)
             text("""                 Are you sure you want
-                 to return to restart?
+                 to restart the game?
+                 
                  Your game will
-                 be lost""", 40, 130)
-            text("Y = YES   N = NO", 120, 250)
+                 be lost.""", -30, 150)
+            text("Y = YES   N = NO", 120, 400)
         elif menu_prompt:
             fill(255)
             stroke(0)
-            strokeWeight(1)
+            strokeWeight(5)
 
-            rect(100, 100, 200, 200)
+            rect(90, 100, 300, 350)
             fill(0)
-            textSize(15)
+            textSize(25)
             text("""                 Are you sure you want
-                 to return to menu?
+                 to return to the menu?
+                 
                  Your game will
-                 be saved""", 40, 130)
-            text("Y = YES   N = NO", 120, 250)
+                 be saved.""", -30, 150)
+            text("Y = YES   N = NO", 120, 400)
 
         noStroke()
 
