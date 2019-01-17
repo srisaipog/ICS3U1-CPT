@@ -368,62 +368,7 @@ def draw():
                PLAYER_1_COLOUR[2])
 
         # Drawing the score and people
-        if turn == "p1":
-            strokeWeight(5)
-        else:
-            strokeWeight(1)
-
-        x = width - 100
-
-        line((width / 20) * 3, (height / 10) * 10,
-             (width / 20) * 2, (height / 10) * 9)
-        line((width / 20) * 1, (height / 10) * 10,
-             (width / 20) * 2, (height / 10) * 9)
-
-        line((width / 20) * 2, (height / 10) * 9,
-             (width / 20) * 2, (height / 10) * 7.75)
-
-        line((width / 20) * 2, (height / 10) * 8.5,
-             (width / 20) * 3, (height / 10) * 8.25)
-        line((width / 20) * 2, (height / 10) * 8.5,
-             (width / 20) * 1, (height / 10) * 8.25)
-
-        ellipse((width / 20) * 2, (height / 10) * 7.75, 50, 50)
-
-        # Person 2
-        fill(PLAYER_2_COLOUR[0],
-             PLAYER_2_COLOUR[1],
-             PLAYER_2_COLOUR[2])
-        stroke(PLAYER_2_COLOUR[0],
-               PLAYER_2_COLOUR[1],
-               PLAYER_2_COLOUR[2])
-
-        if turn == "p2":
-            strokeWeight(5)
-        else:
-            strokeWeight(1)
-
-        line((width / 20) * 3 + x, (height / 10) * 10,
-             (width / 20) * 2 + x, (height / 10) * 9)
-        line((width / 20) * 1 + x, (height / 10) * 10,
-             (width / 20) * 2 + x, (height / 10) * 9)
-
-        line((width / 20) * 2 + x, (height / 10) * 9,
-             (width / 20) * 2 + x, (height / 10) * 7.75)
-
-        line((width / 20) * 2 + x, (height / 10) * 8.5,
-             (width / 20) * 3 + x, (height / 10) * 8.25)
-        line((width / 20) * 2 + x, (height / 10) * 8.5,
-             (width / 20) * 1 + x, (height / 10) * 8.25)
-
-        ellipse((width / 20) * 2 + x, (height / 10) * 7.75, 50, 50)
-
-        fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
-        text("P2 Score: " + str((len(player_2_boxes))),
-             width - 125, height - 180)
-
-        fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
-        text("P1 Score: " + str((len(player_1_boxes))), 5, height - 180)
+        draw_score()
 
         # Setting attributes of dots
         fill(DOT_COLOUR[0], DOT_COLOUR[1], DOT_COLOUR[2])
@@ -507,7 +452,6 @@ def draw():
             textSize(25)
             text("""                 Are you sure you want
                  to restart the game?
-
                  Your game will
                  be lost.""", -30, 150)
             text("Y = YES   N = NO", 120, 400)
@@ -521,7 +465,6 @@ def draw():
             textSize(25)
             text("""                 Are you sure you want
                  to return to the menu?
-
                  Your game will
                  be saved.""", -30, 150)
             text("Y = YES   N = NO", 120, 400)
@@ -558,71 +501,7 @@ def draw():
             text(("P1: " + str(p1_score)), 100, 200)
             text(("P2: " + str(p2_score)), 250, 200)
 
-            fill(0)
-
-            textSize(40)
-
-            if win != "Draw":
-                text((str(win) + " has won!"), 80, 50)
-            else:
-                text("It's a draw!", 100, 50)
-
-            if win == "Player 1":
-                strokeWeight(10)
-            else:
-                strokeWeight(1)
-
-            fill(PLAYER_1_COLOUR[0],
-                 PLAYER_1_COLOUR[1],
-                 PLAYER_1_COLOUR[2])
-            stroke(PLAYER_1_COLOUR[0],
-                   PLAYER_1_COLOUR[1],
-                   PLAYER_1_COLOUR[2])
-
-            x = width - 100
-
-            line((width / 20) * 3, (height / 10) * 10,
-                 (width / 20) * 2, (height / 10) * 9)
-            line((width / 20) * 1, (height / 10) * 10,
-                 (width / 20) * 2, (height / 10) * 9)
-
-            line((width / 20) * 2, (height / 10) * 9,
-                 (width / 20) * 2, (height / 10) * 7.75)
-
-            line((width / 20) * 2, (height / 10) * 8.5,
-                 (width / 20) * 3, (height / 10) * 8.25)
-            line((width / 20) * 2, (height / 10) * 8.5,
-                 (width / 20) * 1, (height / 10) * 8.25)
-
-            ellipse((width / 20) * 2, (height / 10) * 7.75, 50, 50)
-
-            # Person 2
-            fill(PLAYER_2_COLOUR[0],
-                 PLAYER_2_COLOUR[1],
-                 PLAYER_2_COLOUR[2])
-            stroke(PLAYER_2_COLOUR[0],
-                   PLAYER_2_COLOUR[1],
-                   PLAYER_2_COLOUR[2])
-
-            if win == "Player 2":
-                strokeWeight(10)
-            else:
-                strokeWeight(1)
-
-            line((width / 20) * 3 + x, (height / 10) * 10,
-                 (width / 20) * 2 + x, (height / 10) * 9)
-            line((width / 20) * 1 + x, (height / 10) * 10,
-                 (width / 20) * 2 + x, (height / 10) * 9)
-
-            line((width / 20) * 2 + x, (height / 10) * 9,
-                 (width / 20) * 2 + x, (height / 10) * 7.75)
-
-            line((width / 20) * 2 + x, (height / 10) * 8.5,
-                 (width / 20) * 3 + x, (height / 10) * 8.25)
-            line((width / 20) * 2 + x, (height / 10) * 8.5,
-                 (width / 20) * 1 + x, (height / 10) * 8.25)
-
-            ellipse((width / 20) * 2 + x, (height / 10) * 7.75, 50, 50)
+            end_game_draw()
 
             textSize(20)
             text("Press any key to return to menu", 60, height - 50)
@@ -638,6 +517,134 @@ def end_game(wid, leng, p1_box, p2_box):
         return True
     else:
         return False
+
+
+def end_game_draw():
+
+    fill(0)
+
+    textSize(40)
+
+    if win != "Draw":
+        text((str(win) + " has won!"), 80, 50)
+    else:
+        text("It's a draw!", 100, 50)
+
+    if win == "Player 1":
+        strokeWeight(10)
+    else:
+        strokeWeight(1)
+
+    fill(PLAYER_1_COLOUR[0],
+         PLAYER_1_COLOUR[1],
+         PLAYER_1_COLOUR[2])
+    stroke(PLAYER_1_COLOUR[0],
+           PLAYER_1_COLOUR[1],
+           PLAYER_1_COLOUR[2])
+
+    x = width - 100
+
+    line((width / 20) * 3, (height / 10) * 10,
+         (width / 20) * 2, (height / 10) * 9)
+    line((width / 20) * 1, (height / 10) * 10,
+         (width / 20) * 2, (height / 10) * 9)
+
+    line((width / 20) * 2, (height / 10) * 9,
+         (width / 20) * 2, (height / 10) * 7.75)
+
+    line((width / 20) * 2, (height / 10) * 8.5,
+         (width / 20) * 3, (height / 10) * 8.25)
+    line((width / 20) * 2, (height / 10) * 8.5,
+         (width / 20) * 1, (height / 10) * 8.25)
+
+    ellipse((width / 20) * 2, (height / 10) * 7.75, 50, 50)
+
+    # Person 2
+    fill(PLAYER_2_COLOUR[0],
+         PLAYER_2_COLOUR[1],
+         PLAYER_2_COLOUR[2])
+    stroke(PLAYER_2_COLOUR[0],
+           PLAYER_2_COLOUR[1],
+           PLAYER_2_COLOUR[2])
+
+    if win == "Player 2":
+        strokeWeight(10)
+    else:
+        strokeWeight(1)
+
+    line((width / 20) * 3 + x, (height / 10) * 10,
+         (width / 20) * 2 + x, (height / 10) * 9)
+    line((width / 20) * 1 + x, (height / 10) * 10,
+         (width / 20) * 2 + x, (height / 10) * 9)
+
+    line((width / 20) * 2 + x, (height / 10) * 9,
+         (width / 20) * 2 + x, (height / 10) * 7.75)
+
+    line((width / 20) * 2 + x, (height / 10) * 8.5,
+         (width / 20) * 3 + x, (height / 10) * 8.25)
+    line((width / 20) * 2 + x, (height / 10) * 8.5,
+         (width / 20) * 1 + x, (height / 10) * 8.25)
+
+    ellipse((width / 20) * 2 + x, (height / 10) * 7.75, 50, 50)
+
+
+def draw_score():
+    if turn == "p1":
+        strokeWeight(5)
+    else:
+        strokeWeight(1)
+
+    x = width - 100
+
+    line((width / 20) * 3, (height / 10) * 10,
+         (width / 20) * 2, (height / 10) * 9)
+    line((width / 20) * 1, (height / 10) * 10,
+         (width / 20) * 2, (height / 10) * 9)
+
+    line((width / 20) * 2, (height / 10) * 9,
+         (width / 20) * 2, (height / 10) * 7.75)
+
+    line((width / 20) * 2, (height / 10) * 8.5,
+         (width / 20) * 3, (height / 10) * 8.25)
+    line((width / 20) * 2, (height / 10) * 8.5,
+         (width / 20) * 1, (height / 10) * 8.25)
+
+    ellipse((width / 20) * 2, (height / 10) * 7.75, 50, 50)
+
+    # Person 2
+    fill(PLAYER_2_COLOUR[0],
+         PLAYER_2_COLOUR[1],
+         PLAYER_2_COLOUR[2])
+    stroke(PLAYER_2_COLOUR[0],
+           PLAYER_2_COLOUR[1],
+           PLAYER_2_COLOUR[2])
+
+    if turn == "p2":
+        strokeWeight(5)
+    else:
+        strokeWeight(1)
+
+    line((width / 20) * 3 + x, (height / 10) * 10,
+         (width / 20) * 2 + x, (height / 10) * 9)
+    line((width / 20) * 1 + x, (height / 10) * 10,
+         (width / 20) * 2 + x, (height / 10) * 9)
+
+    line((width / 20) * 2 + x, (height / 10) * 9,
+         (width / 20) * 2 + x, (height / 10) * 7.75)
+
+    line((width / 20) * 2 + x, (height / 10) * 8.5,
+         (width / 20) * 3 + x, (height / 10) * 8.25)
+    line((width / 20) * 2 + x, (height / 10) * 8.5,
+         (width / 20) * 1 + x, (height / 10) * 8.25)
+
+    ellipse((width / 20) * 2 + x, (height / 10) * 7.75, 50, 50)
+
+    fill(PLAYER_2_COLOUR[0], PLAYER_2_COLOUR[1], PLAYER_2_COLOUR[2])
+    text("P2 Score: " + str((len(player_2_boxes))),
+         width - 125, height - 180)
+
+    fill(PLAYER_1_COLOUR[0], PLAYER_1_COLOUR[1], PLAYER_1_COLOUR[2])
+    text("P1 Score: " + str((len(player_1_boxes))), 5, height - 180)
 
 
 # Tests and assert statements
