@@ -966,7 +966,8 @@ def info():
     The final version of this game was made on:
         15 January 2019
     This game was made using Processing for Python.
-    For further details, please contact Sridhar Sairam.
+    For further details, please contact Sridhar Sairam
+    at sridhar.sairam21@ycdsbk12.ca
     """
     return information
 
